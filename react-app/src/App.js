@@ -7,7 +7,7 @@ import './App.css';
 import CreateContent from "./component/CreateContent";
 import UpdateContent from "./component/UpdateContent";
 
-
+//CRUD 예제 메인.
 class App extends Component {
 
     constructor(props) {
@@ -15,7 +15,7 @@ class App extends Component {
         this.max_content_id = 3;
 
         this.state = {
-            mode: "update",
+            mode: "welcome",
             selected_content_id: 2,
             welcome: {title: "Welcome", desc: "Hello, React!!!"},
             subject: {
@@ -86,12 +86,20 @@ class App extends Component {
             var _content = this.getReadContent();
             _article = <UpdateContent
                 data={_content}
-                onSubmit={function (_title, _desc) {
-                    this.max_content_id = this.max_content_id + 1;
+                onSubmit={function (_id, _title, _desc) {
                     var _contents = Array.from(this.state.contents);
-                    _contents.push(
-                        {id: this.max_content_id, title: _title, desc: _desc},
-                    );
+                    var i = 0;
+                    while (i < _contents.length) {
+                        if (_contents[i].id === _id) {
+                            _contents[i] = {
+                                id: _id,
+                                title: _title,
+                                desc: _desc,
+                            };
+                            break;
+                        }
+                        i++;
+                    }
                     this.setState({
                         /*App의 this.state.contents 를 바꾸었다 하더라도 setState() 로 바꿔야 함.*/
                         contents: _contents,
@@ -163,9 +171,29 @@ class App extends Component {
                 그래서 bind(this) 해주는것.*/}
                 {/*이벤트가 실행되었을때 실행되어야 하는 함수를 Handler라 한다.*/}
                 <Control onChangeMode={function (_mode) {  //핸들러 함수.
-                    this.setState({
-                        mode: _mode,
-                    });
+                    if (_mode === "delete") {
+                        if (window.confirm("Really??")) {
+                            var _contents = Array.from(this.state.contents);
+                            var i = 0;
+                            while (i < _contents.length) {
+                                if (_contents[i].id === this.state.selected_content_id) {
+                                    _contents.splice(i, 1);
+                                    break;
+                                }
+                                i++;
+                            }
+                            this.setState({
+                                mode: "welcome",
+                                contents: _contents,
+                            });
+                            window.alert("Deleted!!");
+                        }
+                    } else {
+                        this.setState({
+                            mode: _mode,
+                        });
+                    }
+
                 }.bind(this)}></Control>
 
                 {this.getContent()}

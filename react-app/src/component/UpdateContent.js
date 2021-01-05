@@ -4,7 +4,9 @@ class UpdateContent extends Component {
 
     constructor(props) {
         super(props);
+        //가변적인 데이터를 위해 state 화 시킴.
         this.state = {
+            id: this.props.data.id,
             title: this.props.data.title,
             desc: this.props.data.desc,
         }
@@ -30,19 +32,25 @@ class UpdateContent extends Component {
                           // debugger;
                           // alert("submit");
                           this.props.onSubmit(
-                              e.target.title.value,
-                              e.target.desc.value
+                              this.state.id,
+                              this.state.title,
+                              this.state.desc
+                              /*e.target.title.value,
+                              e.target.desc.value*/
                           );
                       }.bind(this)}
                 >
-                    <p><input
-                        type="text"
-                        name="title"
-                        placeholder="title"
-                        /*value={this.props.data.title}*/
-                        value={this.state.title}
-                        onChange={this.inputFormHandler.bind(this)}
-                    /></p>
+                    <input type="hidden" name="id" value={this.state.id}/>
+                    <p>
+                        <input
+                            type="text"
+                            name="title"
+                            placeholder="title"
+                            /*value={this.props.data.title}*/
+                            value={this.state.title}
+                            onChange={this.inputFormHandler.bind(this)}
+                        />
+                    </p>
                     <p>
                         <textarea
                             name="desc"
