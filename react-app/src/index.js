@@ -4,12 +4,23 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import App2 from "./App2";
+import App3 from "./App3";
+import {
+    BrowserRouter
+    // HashRouter
+} from "react-router-dom";
 
 ReactDOM.render(
     <React.StrictMode>
         {/*CRUD example.*/}
         {/*<App/>*/}
-        <App2/>
+        {/*<App2/>*/}
+        {/*<BrowserRouter>*/}
+        {/*    <App3/>*/}
+        {/*</BrowserRouter>*/}
+        {/*<HashRouter>*/}
+        {/*    <App3/>*/}
+        {/*</HashRouter>*/}
     </React.StrictMode>,
     document.getElementById('root')
 );
