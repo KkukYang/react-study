@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.5/redux.js"></script>
+</head>
+<body>
+<style>
+    .container {
+        border: 5px solid black;
+        padding: 10px;
+    }
+</style>
+<div id="red"></div>
+<div id="blue"></div>
+<div id="green"></div>
+<script>
+    //기존 state / 바꿀 값 action -> 다음의 state 값을 return.
+    function reducer(state, action) {
+        // console.log("reducer() 1111", state, action);
+        if (state === undefined) {
+            return {color: "yellow"}
+        }
+        if (action.type === "CHANGE_COLOR") {
+            newState = Object.assign({}, state, {color: action.color});
+        }
+        // console.log("reducer() 2222", newState);
+        console.log(action.type, action, state, newState);
+        return newState;
+    }
+
+    var store = Redux.createStore(reducer,
+        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+    console.log("getState()", store.getState());
+
+    function red() {
+        var state = store.getState();
+        // console.log("red()");
+        document.querySelector("#red").innerHTML = `
+                <div class="container" id="component_red" style="background-color: ${state.color}">
+                    <h1>red</h1>
+                    <input type="button" value="fire" onclick="
+                       store.dispatch({type:'CHANGE_COLOR', color:'red'});//dispatch() 파라미터 인자가 action.
+                    ">
+                </div>
+            `;
+    }
+
+    store.subscribe(red);
+    red();
+
+    function blue() {
+        // console.log("blue()");
+        var state = store.getState();
+        document.querySelector("#blue").innerHTML = `
+                <div class="container" id="component_blue" style="background-color: ${state.color}">
+                    <h1>blue</h1>
+                    <input type="button" value="fire" onclick="
+                       store.dispatch({type:'CHANGE_COLOR', color:'blue'});//dispatch() 파라미터 인자가 action.
+                    ">
+                </div>
+            `;
+    }
+
+    store.subscribe(blue);
+    blue();
+
+    function green() {
+        // console.log("green()");
+        var state = store.getState();
+        document.querySelector("#green").innerHTML = `
+                <div class="container" id="component_green" style="background-color: ${state.color}">
+                    <h1>green</h1>
+                    <input type="button" value="fire" onclick="
+                       store.dispatch({type:'CHANGE_COLOR', color:'green'});//dispatch() 파라미터 인자가 action.
+                    ">
+                </div>
+            `;
+    }
+
+    store.subscribe(green);
+    green();
+
+</script>
+</body>
+</html>
