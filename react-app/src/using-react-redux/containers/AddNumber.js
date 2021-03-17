@@ -1,31 +1,25 @@
 import AddNumber from "../AddNumber";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
-
-function mapStateToProps(state){
-    return{
-
-    }
+function mapStateToProps(state) {
+  return {
+    number: state.number,
+  };
 }
 
 function mapDispatchToProps(dispatch) {
-    return {
-        onClick: function (size) {
-            // store.dispatch({
-            //     type: "INCREMENT",
-            //     size: size
-            // });
-            dispatch({
-                type: "INCREMENT",
-                size: size
-            });
-        }
-    }
+  return {
+    onClick: function (size) {
+      dispatch({
+        type: "INCREMENT",
+        size: size,
+      });
+    },
+  };
 }
 
-
 // https://gist.github.com/gaearon/1d19088790e70ac32ea636c025ba424e
-export default connect(null, mapDispatchToProps)(AddNumber);
+export default connect(mapStateToProps, mapDispatchToProps)(AddNumber);
 
 /*import AddNumber from "../AddNumber";
 import React, {Component} from "react";

@@ -1,19 +1,31 @@
 import React, { Component } from "react";
-import WebWorker from "./WebWorker";
-import myWorker from "./myWorker";
+// import WebWorker from "./WebWorker";
+// import myWorker from "./myWorker";
 
 class DisplayNumber extends Component {
   constructor(props) {
     super(props);
   }
 
-  componentWillUpdate() {
-    if (window.Worker) {
-      var worker = new WebWorker(myWorker);
+  componentDidUpdate() {
+    /* if (window.Worker) {
+      var worker = new WebWorker(myWorker, JSON.stringify(this.props));
+      var n = 0;
+      console.log("normal");
+      console.time("normal");
+      //10억.
+      //   for (let i = 0; i < 1000000000; i++) {
+      //     n++;
+      //   }
+      console.log(n);
+      console.timeEnd("normal");
+      worker.postMessage("asdf");
+
       worker.onmessage = (event) => {
         console.log(event.data);
+        worker.terminate();
       };
-    }
+    } */
   }
 
   render() {
